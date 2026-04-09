@@ -25,7 +25,7 @@ public class AcessorioController {
     }
 
     @PutMapping
-    public AcessorioModel update(AcessorioModel acessorioModel){
+    public AcessorioModel update(@RequestBody AcessorioModel acessorioModel){
         return acessorioService.update(acessorioModel);
     }
 

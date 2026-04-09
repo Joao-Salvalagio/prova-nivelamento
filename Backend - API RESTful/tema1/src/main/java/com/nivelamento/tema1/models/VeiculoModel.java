@@ -1,10 +1,11 @@
 package com.nivelamento.tema1.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -16,14 +17,19 @@ public class VeiculoModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     private String modelo;
-    @NotNull
     private Integer anoFabricacao;
-    @NotNull
     private String placa;
 
-    @ManyToOne
-    @JoinColumn(name = "id_acessorio")
-    private AcessorioModel item;
+    @OneToMany(mappedBy = "veiculo")
+    private List<AcessorioModel> acessorios;
+
+    public void addAcessorio(AcessorioModel item) {
+        this.acessorios.add(item);
+        item.setVeiculo(this);
+    }
+    public void removeAcessorio(AcessorioModel item) {
+        this.acessorios.remove(item);
+        item.setVeiculo(null);
+    }
 }
